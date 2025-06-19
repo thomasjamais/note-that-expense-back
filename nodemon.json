@@ -1,0 +1,11 @@
+{
+    "watch": [
+        "src",
+        "routes"
+    ],
+    "ext": "ts,sql",
+    "ignore": [
+        "dist"
+    ],
+    "exec": "npm run dev:build"
+}

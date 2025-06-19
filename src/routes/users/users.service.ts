@@ -1,0 +1,62 @@
+import type { USER_DTO } from "@models/users";
+import { dal } from "@services/dal";
+import { logger } from "@services/logger";
+import { safeQuery } from "@services/query";
+import { partialUpdateForQuery } from "@utils/query";
+
+import { USER_UPDATE_FIELDS, USERS_DAL, USERS_ERRORS } from "./users.constants";
+
+const getUserByIdService = async (userId: string): Promise<USER_DTO> => {
+  logger.debug("getUserByIdService called with userId:", { userId });
+
+  const result = await safeQuery<USER_DTO>(dal[USERS_DAL.getUserById], [
+    userId,
+  ]);
+
+  if (!result?.rowCount || result.rowCount === 0) {
+    throw new Error(USERS_ERRORS.USER_NOT_FOUND);
+  }
+  return result.rows[0];
+};
+
+const updateUserByIdService = async (
+  reqestUserId: string,
+  userId: string,
+  updateData: Partial<USER_DTO>
+): Promise<USER_DTO> => {
+  logger.info("updateUserByIdService called with :", {
+    userId,
+    updateData,
+    reqestUserId,
+  });
+
+  if (reqestUserId !== userId) {
+    logger.error("❌ Unauthorized update attempt:", {
+      requestUserId: reqestUserId,
+      userId,
+    });
+    throw new Error(USERS_ERRORS.UNAUTHORIZED);
+  }
+
+  const valuesToUpdate = partialUpdateForQuery(
+    [...USER_UPDATE_FIELDS],
+    updateData
+  );
+
+  const updatedUser = await safeQuery<USER_DTO>(dal[USERS_DAL.updateUserById], [
+    userId,
+    ...valuesToUpdate,
+  ]);
+
+  if (!updatedUser?.rowCount || updatedUser.rowCount === 0) {
+    throw new Error(USERS_ERRORS.USER_NOT_FOUND);
+  }
+
+  logger.info("✅ User updated successfully:", {
+    updatedUser,
+  });
+
+  return updatedUser.rows[0];
+};
+
+export { getUserByIdService, updateUserByIdService };
