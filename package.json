@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc && npm run copy-sql",
     "start": "node dist/index.js",
-    "dev:build": "tsc && npm run copy-sql && npm run migrate:up &&tsx dist/index.js",
+    "dev:build": "tsc && npm run copy-sql && npm run migrate:up && tsx dist/src/index.js",
     "dev": "nodemon",
     "copy-sql": "cpx \"src/routes/**/*.sql\" dist/routes",
     "migrate:up": "npx tsx src/services/migrate.ts up",

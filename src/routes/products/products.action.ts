@@ -3,7 +3,7 @@ import { logger } from "@services/logger";
 import { isErrorWithCode, isErrorWithMessage } from "@utils/error";
 import type { Request, Response } from "express";
 
-import { PRODUCTS_ERRORS } from "./products.constants";
+import { PRODUCTS_ERRORS } from "./products.constant";
 import {
   addProductService,
   getProductsByUserIdService,

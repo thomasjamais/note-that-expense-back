@@ -3,7 +3,7 @@ import { logger } from "@services/logger";
 import { isErrorWithMessage } from "@utils/error";
 import type { Request, Response } from "express";
 
-import { USERS_ERRORS } from "./users.constants";
+import { USERS_ERRORS } from "./users.constant";
 import { getUserByIdService, updateUserByIdService } from "./users.service";
 
 export const getUserByIdAction = async (
