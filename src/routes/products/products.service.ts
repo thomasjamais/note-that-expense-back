@@ -13,7 +13,7 @@ import {
   PRODUCTS_DAL,
   PRODUCTS_ERRORS,
   PRODUCTS_SEARCH_FIELDS,
-} from "./products.constants";
+} from "./products.constant";
 
 export const addProductService = async (
   userId: string,

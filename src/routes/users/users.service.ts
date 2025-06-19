@@ -4,7 +4,7 @@ import { logger } from "@services/logger";
 import { safeQuery } from "@services/query";
 import { partialUpdateForQuery } from "@utils/query";
 
-import { USER_UPDATE_FIELDS, USERS_DAL, USERS_ERRORS } from "./users.constants";
+import { USER_UPDATE_FIELDS, USERS_DAL, USERS_ERRORS } from "./users.constant";
 
 const getUserByIdService = async (userId: string): Promise<USER_DTO> => {
   logger.debug("getUserByIdService called with userId:", { userId });

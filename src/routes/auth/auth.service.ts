@@ -5,7 +5,7 @@ import { safeQuery } from "@services/query";
 import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-import { AUTH_DAL, AUTH_ERRORS } from "./auth.constants";
+import { AUTH_DAL, AUTH_ERRORS } from "./auth.constant";
 import type { LoginUserInput, RegisterUserInput } from "./auth.validator";
 
 const registerUser = async (

@@ -2,7 +2,7 @@ import { logger } from "@services/logger";
 import { isErrorWithCode, isErrorWithMessage } from "@utils/error";
 import type { Request, Response } from "express";
 
-import { AUTH_ERRORS } from "./auth.constants";
+import { AUTH_ERRORS } from "./auth.constant";
 import { registerUser, loginUser } from "./auth.service";
 
 export const registerUserAction = async (

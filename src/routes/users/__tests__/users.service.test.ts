@@ -1,7 +1,7 @@
 import * as safeQueryModule from "@services/query";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
-import { USERS_ERRORS } from "../users.constants";
+import { USERS_ERRORS } from "../users.constant";
 import { getUserByIdService, updateUserByIdService } from "../users.service";
 
 describe("getUserByIdService", () => {
