@@ -8,7 +8,7 @@ import {
   SUBCATEGORIES_ERRORS,
 } from "./subcategories.constant";
 
-export const getSubcategoriesByCategoryId = async (
+export const getSubcategoriesByCategoryIdService = async (
   categoryId: string
 ): Promise<SUBGATEGORIES_DTO[]> => {
   logger.info("🔍 getSubcategoriesByCategoryId called", { categoryId });

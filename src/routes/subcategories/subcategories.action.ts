@@ -3,7 +3,7 @@ import { isErrorWithMessage } from "@utils/error";
 import type { Request, Response } from "express";
 
 import { SUBCATEGORIES_ERRORS } from "./subcategories.constant";
-import { getSubcategoriesByCategoryId } from "./subcategories.service";
+import { getSubcategoriesByCategoryIdService } from "./subcategories.service";
 
 export const getSubcategoriesAction = async (
   req: Request,
@@ -13,7 +13,7 @@ export const getSubcategoriesAction = async (
   logger.info("🔍 Retrieving subcategories for categoryId:", { categoryId });
 
   try {
-    const subcategories = await getSubcategoriesByCategoryId(categoryId);
+    const subcategories = await getSubcategoriesByCategoryIdService(categoryId);
     logger.info("✅ Subcategories retrieved successfully:", subcategories);
     res.json(subcategories);
   } catch (error) {
