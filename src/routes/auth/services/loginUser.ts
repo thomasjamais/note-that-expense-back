@@ -5,33 +5,10 @@ import { safeQuery } from "@services/query";
 import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-import { AUTH_DAL, AUTH_ERRORS } from "./auth.constant";
-import type { LoginUserInput, RegisterUserInput } from "./auth.validator";
+import { AUTH_DAL, AUTH_ERRORS } from "../auth.constant";
+import type { LoginUserInput } from "../auth.validator";
 
-const registerUser = async (
-  user: RegisterUserInput
-): Promise<USER_CAMEL_DTO> => {
-  const hashedPassword = await bcrypt.hash(user.password, 10);
-  const values = [user.email, hashedPassword];
-
-  if (user.password !== user.confirmPassword) {
-    logger.error("❌ Password mismatch:", {
-      email: user.email,
-    });
-    throw new Error(AUTH_ERRORS.PASSWORD_MISMATCH);
-  }
-
-  const result = await safeQuery<USER_CAMEL_DTO>(
-    dal[AUTH_DAL.registerUser],
-    values
-  );
-  if (!result) {
-    throw new Error("Query result is null");
-  }
-  return result.rows[0];
-};
-
-const loginUser = async (
+const loginUserService = async (
   user: LoginUserInput
 ): Promise<USER_CAMEL_DTO_WITH_TOKEN> => {
   const values = [user.email];
@@ -72,4 +49,4 @@ const loginUser = async (
   return { ...result.rows[0], token };
 };
 
-export { registerUser, loginUser };
+export { loginUserService };
