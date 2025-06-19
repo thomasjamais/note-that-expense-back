@@ -1,7 +1,8 @@
 import { validateData } from "@services/validation";
 import express from "express";
 
-import { loginUserAction, registerUserAction } from "./auth.action";
+import { loginUserAction } from "./actions/loginUser";
+import { registerUserAction } from "./actions/registerUser";
 import { loginUser, registerUser } from "./auth.validator";
 
 const router = express.Router();
