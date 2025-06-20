@@ -2,6 +2,7 @@
 
 import { logRequests } from "@middlewares/logger";
 import { createRouter } from "@routes/index";
+import cors from "cors";
 import express from "express";
 
 // const cookieParser = require("cookie-parser");
@@ -40,18 +41,18 @@ const initialize = async (
   app
     .use(express.json({ limit: "50mb" }))
     .use(express.urlencoded({ limit: "50mb", extended: true }))
-    .use(logRequests);
-  // .use(helmet())
-  // .use(addRequestId())
-  // .use(pinoExpressLogger)
-  // .use(httpContext.middleware)
-  // .use(connectTimeout(timeout, { respond: true }))
-  // .use(
-  //   cors({
-  //     credentials: true,
-  //     origin: config.api.corsOrigin,
-  //   }),
-  // )
+    .use(logRequests)
+    // .use(helmet())
+    // .use(addRequestId())
+    // .use(pinoExpressLogger)
+    // .use(httpContext.middleware)
+    // .use(connectTimeout(timeout, { respond: true }))
+    .use(
+      cors({
+        credentials: true,
+        origin: true,
+      })
+    );
   // .use(cookieParser())
   // .use(passport.initialize());
 
