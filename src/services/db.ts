@@ -13,6 +13,13 @@ import { loadAllSQLFromRoutes } from "./dal";
 import { logger } from "./logger";
 
 dotenv.config();
+logger.info("🌱 PlantMarket Backend - Database Configuration Loaded", {
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: Number(process.env.DB_PORT),
+});
 
 const db = new Pool({
   user: process.env.DB_USER,
@@ -20,6 +27,9 @@ const db = new Pool({
   database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
   port: Number(process.env.DB_PORT),
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 loadAllSQLFromRoutes();

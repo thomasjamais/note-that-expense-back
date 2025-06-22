@@ -11,7 +11,7 @@ dotenv.config();
 //   response.status(200).send("Hello World");
 // });
 
-initialize(3000, "127.0.0.1");
+initialize(3000, "0.0.0.0");
 
 // app
 //   .listen(PORT, () => {

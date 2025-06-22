@@ -1,5 +1,3 @@
-"use strict";
-
 import { logRequests } from "@middlewares/logger";
 import { createRouter } from "@routes/index";
 import cors from "cors";
@@ -50,6 +48,8 @@ const initialize = async (
     .use(
       cors({
         credentials: true,
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization"],
         origin: true,
       })
     );

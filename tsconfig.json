@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "commonjs",
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
-    "rootDir": "./",
+    "rootDir": "./src",
     "baseUrl": "./src",
     "paths": {
       "@services/*": ["services/*"],
@@ -20,6 +21,6 @@
     },
     "sourceMap": false
   },
-  "include": ["src/**/*", "vite.config.ts", "pgtyped.config.js"],
+  "include": ["src"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

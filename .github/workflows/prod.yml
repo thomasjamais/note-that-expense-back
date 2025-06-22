@@ -1,17 +1,20 @@
-name: prod
-
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
-  build-and-test:
+  deploy:
     runs-on: ubuntu-latest
-
+    env:
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_NAME: ${{ secrets.DB_NAME }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
     steps:
-      - name: Checkout le code
+      - name: Checkout
         uses: actions/checkout@v3
 
       - name: Setup SSH key
@@ -19,16 +22,28 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
-      - name: Deploy to EC2
+      - name: Generate .env with secrets
         run: |
+          envsubst < .env.template > .env.generated
+
+      - name: Copy files and deploy
+        run: |
+          scp -o StrictHostKeyChecking=no .env.generated ubuntu@15.236.209.241:/home/ubuntu/plantmarket_backend/.env
           ssh -o StrictHostKeyChecking=no ubuntu@15.236.209.241 << EOF
             cd /home/ubuntu/plantmarket_backend
+            echo "✅ Updating source..."
             git config --global user.name "github-actions"
             git config --global user.email "sebastien.gras75@gmail.com"
             git fetch origin main
             git reset --hard origin/main
+
+            echo "📦 Installing dependencies..."
             npm install
+
+            echo "🏗️ Building app..."
             npm run build
+
+            echo "🚀 Starting app with PM2..."
             pm2 reload api || pm2 start dist/index.js --name api
             pm2 save
           EOF

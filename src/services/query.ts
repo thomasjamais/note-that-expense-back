@@ -1,5 +1,3 @@
-import camelcaseKeys from "camelcase-keys";
-
 import db from "./db";
 import { logger } from "./logger";
 
@@ -28,6 +26,8 @@ export async function safeQuery<T extends Record<string, unknown>>(
 ): Promise<QueryResult<T> | null> {
   try {
     const result = await db.query<T>(query, params);
+    const camelcaseKeys = (await import("camelcase-keys")).default;
+
     const camelRows = camelcaseKeys(result.rows, {
       deep: true,
     }) as CamelCasedProperties<T>[];
