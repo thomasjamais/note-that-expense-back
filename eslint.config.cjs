@@ -1,4 +1,3 @@
-// eslint.config.cjs
 const ts = require("@typescript-eslint/eslint-plugin");
 const parser = require("@typescript-eslint/parser");
 const importPlugin = require("eslint-plugin-import");
@@ -24,7 +23,8 @@ module.exports = [
       import: importPlugin,
     },
     rules: {
-      // TypeScript strict rules
+      "no-inline-comments": "error",
+      "no-warning-comments": "error",
       "@typescript-eslint/no-explicit-any": "error",
       "@typescript-eslint/no-unused-vars": [
         "error",
@@ -36,7 +36,6 @@ module.exports = [
       ],
       "@typescript-eslint/consistent-type-imports": "error",
 
-      // Import triés
       "import/order": [
         "error",
         {
@@ -53,7 +52,6 @@ module.exports = [
         },
       ],
 
-      // Prettier safe
       ...prettier.rules,
     },
   },

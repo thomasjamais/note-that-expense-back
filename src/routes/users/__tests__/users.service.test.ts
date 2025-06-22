@@ -1,5 +1,5 @@
 import * as safeQueryModule from "@services/query";
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { USERS_ERRORS } from "../users.constant";
 import { getUserByIdService, updateUserByIdService } from "../users.service";
