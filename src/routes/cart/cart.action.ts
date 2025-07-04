@@ -46,14 +46,13 @@ export const updateItemAction = async (
 ): Promise<void> => {
   logger.info("📝 Updating cart item:", {
     userId: req.userId,
-    itemCartId: req.params.itemCartId,
+    itemCartId: req.body.productId,
     update: req.body,
   });
-
   try {
     const updatedItem = await updateCartService(
-      req.userId!,
-      req.params.itemCartId,
+      req.body.cartId,
+      req.body.productId,
       req.body.quantity
     );
 
@@ -69,7 +68,8 @@ export const updateItemAction = async (
       return;
     }
 
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ error: CART_ERRORS.INTERNAL_SERVER_ERROR });
+    return;
   }
 };
 
