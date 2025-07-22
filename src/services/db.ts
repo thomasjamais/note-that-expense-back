@@ -1,11 +1,3 @@
-/**
- * Database Configuration Module
- *
- * This module sets up and manages a PostgreSQL connection pool using the `pg` library.
- * It leverages environment variables for secure configuration and includes an asynchronous
- * verification function to confirm connectivity at startup.
- */
-
 import dotenv from "dotenv";
 import { Pool } from "pg";
 
@@ -13,7 +5,7 @@ import { loadAllSQLFromRoutes } from "./dal";
 import { logger } from "./logger";
 
 dotenv.config();
-logger.info("🌱 PlantMarket Backend - Database Configuration Loaded", {
+logger.info("🌱 NoteThatExpense Backend - Database Configuration Loaded", {
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
   database: process.env.DB_NAME,
@@ -34,10 +26,6 @@ const db = new Pool({
 
 loadAllSQLFromRoutes();
 
-/**
- * Asynchronously verifies the PostgreSQL connection.
- * Ensures that any issues are logged immediately at application startup.
- */
 async function verifyConnection(): Promise<void> {
   try {
     const client = await db.connect();

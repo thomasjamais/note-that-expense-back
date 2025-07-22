@@ -6,12 +6,7 @@ export type USER_DTO = {
   password_hash: string;
   firstname: string;
   lastname: string;
-  phone_number?: string;
-  address_line1?: string;
-  address_line2?: string;
-  city?: string;
-  zipcode?: string;
-  country?: string;
+  last_login: Date | null;
   created_at: Date;
   updated_at: Date;
 };

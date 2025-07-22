@@ -1,13 +1,12 @@
-// src/middleware/validationMiddleware.ts
-import type { Request, Response, NextFunction } from "express";
+import type { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import type { z, ZodIssue } from "zod";
 import { ZodError } from "zod";
 
 type ValidationSchema = {
-  body?: z.ZodObject<z.ZodRawShape, z.UnknownKeysParam>;
-  query?: z.ZodObject<z.ZodRawShape, z.UnknownKeysParam>;
-  params?: z.ZodObject<z.ZodRawShape, z.UnknownKeysParam>;
+  body?: z.ZodTypeAny;
+  query?: z.ZodTypeAny;
+  params?: z.ZodTypeAny;
 };
 
 export function validateData(schema: ValidationSchema) {
