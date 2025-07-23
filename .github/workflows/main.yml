@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - prod
+      - main
 
 jobs:
   deploy:
@@ -13,6 +13,7 @@ jobs:
       DB_NAME: ${{ secrets.DB_NAME }}
       JWT_SECRET: ${{ secrets.JWT_SECRET }}
       JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -28,12 +29,12 @@ jobs:
 
       - name: Copy files and deploy
         run: |
-          scp -o StrictHostKeyChecking=no .env.generated ubuntu@15.236.209.241:/home/ubuntu/plantmarket_backend/.env
-          ssh -o StrictHostKeyChecking=no ubuntu@15.236.209.241 << EOF
-            cd /home/ubuntu/plantmarket_backend
+          scp -o StrictHostKeyChecking=no .env.generated ubuntu@15.236.205.31:/home/ubuntu/note-that-expense/.env
+          ssh -o StrictHostKeyChecking=no ubuntu@15.236.205.31 << EOF
+            cd /home/ubuntu/note-that-expense
             echo "✅ Updating source..."
             git config --global user.name "github-actions"
-            git config --global user.email "sebastien.gras75@gmail.com"
+            git config --global user.email "thomas.jamais95@gmail.com"
             git fetch origin main
             git reset --hard origin/main
 
