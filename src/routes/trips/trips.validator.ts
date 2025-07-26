@@ -9,11 +9,10 @@ const addTripBody = z.object({
   isActive: z.boolean(),
 });
 
-const loginUser = z.object({
-  email: z.string().email(),
-  password: z.string().min(8, "Password must be at least 8 characters long"),
+const tripIdParam = z.object({
+  tripId: z.string(),
 });
 
-export { addTripBody, loginUser };
+export { addTripBody, tripIdParam };
 export type AddTripBodyInput = z.infer<typeof addTripBody>;
-export type LoginUserInput = z.infer<typeof loginUser>;
+export type TripIdParamInput = z.infer<typeof tripIdParam>;

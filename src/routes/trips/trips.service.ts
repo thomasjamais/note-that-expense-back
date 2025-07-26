@@ -27,6 +27,50 @@ export const addTripService = async (
   return result;
 };
 
+export const deleteTripByIdService = async (
+  userId: string,
+  tripId: string
+): Promise<TRIPS_CAMEL_DTO> => {
+  logger.info("🗑️ deleteTripByIdService called:", { userId, tripId });
+  const result = await safeQueryOne<TRIPS_DTO>(dal[TRIPS_DAL.deleteTripById], [
+    tripId,
+    userId,
+  ]);
+  if (!result) {
+    logger.error("❌ deleteTripByIdService failed: No trip deleted");
+    throw new Error(TRIPS_ERRORS.TRIP_NOT_FOUND);
+  }
+  logger.info("✅ Trip deleted successfully:", {
+    tripId,
+    userId,
+    timestamp: new Date().toISOString(),
+  });
+  return result;
+};
+
+export const updateTripByIdService = async (
+  userId: string,
+  tripId: string,
+  data: AddTripBodyInput
+): Promise<TRIPS_CAMEL_DTO> => {
+  logger.info("✈️ updateTripByIdService called:", { userId, tripId, data });
+  const result = await safeQueryOne<TRIPS_DTO>(dal[TRIPS_DAL.updateTripById], [
+    tripId,
+    data.label,
+    data.localCurrencyId,
+    data.homeCurrencyId,
+    data.isActive,
+    data.startDate,
+    data.endDate || null,
+    userId,
+  ]);
+  if (!result) {
+    logger.error("❌ updateTripService failed: No trip updated");
+    throw new Error(TRIPS_ERRORS.USER_NOT_FOUND);
+  }
+  return result;
+};
+
 export const getUserTripsService = async (
   userId: string
 ): Promise<TRIPS_CAMEL_DTO[]> => {
