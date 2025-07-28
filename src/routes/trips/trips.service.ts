@@ -93,10 +93,23 @@ export const getUserActiveTripService = async (
     dal[TRIPS_DAL.getUserActiveTrip],
     [userId]
   );
-  console.log("Active trip result:", result);
   if (!result) {
     logger.error("❌ getUserActiveTripService failed: No active trip found");
     throw new Error(TRIPS_ERRORS.TRIP_NOT_FOUND);
   }
   return result;
+};
+
+export const getTripByIdService = async (
+  tripId: string
+): Promise<TRIPS_CAMEL_DTO> => {
+  logger.info("🔍 getTripByIdService called:", { tripId });
+  const trip = await safeQueryOne<TRIPS_CAMEL_DTO>(dal[TRIPS_DAL.getTripById], [
+    tripId,
+  ]);
+  if (!trip) {
+    logger.error("❌ getTripByIdService failed: No trip found");
+    throw new Error(TRIPS_ERRORS.TRIP_NOT_FOUND);
+  }
+  return trip;
 };

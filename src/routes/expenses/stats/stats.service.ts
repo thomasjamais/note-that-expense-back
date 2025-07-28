@@ -1,0 +1,40 @@
+import type { DAILY_STATS_CAMEL_DTO, DAILY_STATS_DTO } from "@models/stats";
+import type { TRIPS_DTO } from "@models/trips";
+import { TRIPS_DAL } from "@routes/trips/trips.constant";
+import { dal } from "@services/dal";
+import { logger } from "@services/logger";
+import { safeQueryOne } from "@services/query";
+
+import { STATS_DAL, STATS_ERRORS } from "./stats.constant";
+
+export const getDailyStatsByTripIdService = async (
+  userId: string,
+  tripId: string
+): Promise<DAILY_STATS_CAMEL_DTO> => {
+  logger.info("🔍 Fetching daily stats for tripId:", { tripId, userId });
+
+  const trip = await safeQueryOne<TRIPS_DTO>(dal[TRIPS_DAL.getTripById], [
+    tripId,
+  ]);
+
+  if (!trip || trip.userId !== userId) {
+    logger.error(
+      "User try to fetch a trip that doesn't exist or doesn't belong to this user"
+    );
+    throw new Error(STATS_ERRORS.NOT_AUTHORIZED);
+  }
+
+  const dailyStats = await safeQueryOne<DAILY_STATS_DTO>(
+    dal[STATS_DAL.getDailyStatsByTripId],
+    [tripId]
+  );
+
+  console.log(dailyStats);
+
+  if (!dailyStats) {
+    logger.warn("⚠️ No daily stats found for trip:", { tripId, userId });
+    throw new Error(STATS_ERRORS.STATS_NOT_FOUND);
+  }
+
+  return dailyStats;
+};

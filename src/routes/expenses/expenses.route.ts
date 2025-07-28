@@ -13,6 +13,7 @@ import {
   tripIdAndExpenseIdParams,
   tripIdParams,
 } from "./expenses.validator";
+import { getDailyStatsByTripIdAction } from "./stats/stats.action";
 
 const router = express.Router();
 
@@ -40,6 +41,14 @@ router
     requireAuth,
     validateData({ params: tripIdAndExpenseIdParams, body: expenseBody }),
     updateExpenseForTripAction
+  );
+
+router
+  .route("/expenses/trip/:tripId/stats/daily")
+  .get(
+    requireAuth,
+    validateData({ params: tripIdParams }),
+    getDailyStatsByTripIdAction
   );
 
 export { router };

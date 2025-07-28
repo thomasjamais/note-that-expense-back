@@ -41,7 +41,7 @@ export const addTripAction = async (
       return;
     }
     if (isErrorWithMessage(error, TRIPS_ERRORS.UNAUTHORIZED)) {
-      res.status(401).json({ error: TRIPS_ERRORS.UNAUTHORIZED });
+      res.status(403).json({ error: TRIPS_ERRORS.UNAUTHORIZED });
       return;
     }
 
@@ -81,7 +81,7 @@ export const deleteTripByIdAction = async (
       return;
     }
     if (isErrorWithMessage(error, TRIPS_ERRORS.UNAUTHORIZED)) {
-      res.status(401).json({ error: TRIPS_ERRORS.UNAUTHORIZED });
+      res.status(403).json({ error: TRIPS_ERRORS.UNAUTHORIZED });
       return;
     }
 
@@ -123,7 +123,7 @@ export const updateTripByIdAction = async (
       return;
     }
     if (isErrorWithMessage(error, TRIPS_ERRORS.UNAUTHORIZED)) {
-      res.status(401).json({ error: TRIPS_ERRORS.UNAUTHORIZED });
+      res.status(403).json({ error: TRIPS_ERRORS.UNAUTHORIZED });
       return;
     }
 
