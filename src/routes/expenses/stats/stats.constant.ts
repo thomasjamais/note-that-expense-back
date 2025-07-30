@@ -1,5 +1,6 @@
 export const STATS_DAL = {
   getDailyStatsByTripId: "expenses/stats/getDailyStatsByTripId",
+  getSummaryStatsByTripId: "expenses/stats/getSummaryStatsByTripId",
 };
 export const STATS_ERRORS = {
   INTERNAL_SERVER_ERROR: "INTERNAL_SERVER_ERROR",
