@@ -34,8 +34,6 @@ export const getDailyStatsByTripIdService = async (
     [tripId]
   );
 
-  console.log(dailyStats);
-
   if (!dailyStats) {
     logger.warn("⚠️ No daily stats found for trip:", { tripId, userId });
     throw new Error(STATS_ERRORS.STATS_NOT_FOUND);

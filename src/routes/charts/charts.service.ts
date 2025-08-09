@@ -87,8 +87,6 @@ export const getLineChartForTripIdService = async (
 
   const formatedData = groupDataForStackedChart(lineChartData.rows);
 
-  console.log(formatedData, "Formatted Line Chart Data");
-
   logger.info("✅ Line chart data retrieved successfully for trip:", {
     tripId,
   });
