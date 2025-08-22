@@ -18,12 +18,14 @@ export const getDailyStatsByTripIdAction = async (
   logger.info("🔍 Retrieving daily stats for tripId and userId", {
     tripId: req.params.tripId,
     userId: req.userId,
+    day: req.query.day,
   });
 
   try {
     const dailyStats = await getDailyStatsByTripIdService(
       req.userId!,
-      req.params.tripId
+      req.params.tripId,
+      req.query.day ? new Date(req.query.day as string) : undefined
     );
     logger.info("✅ Trip daily stats retrieved successfully:", {
       length: dailyStats,
