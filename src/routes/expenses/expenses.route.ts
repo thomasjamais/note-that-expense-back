@@ -17,6 +17,7 @@ import {
   getDailyStatsByTripIdAction,
   getSummaryStatsByTripIdAction,
 } from "./stats/stats.action";
+import { dailyStatsQuery } from "./stats/stats.validator";
 
 const router = express.Router();
 
@@ -50,7 +51,7 @@ router
   .route("/expenses/trip/:tripId/stats/daily")
   .get(
     requireAuth,
-    validateData({ params: tripIdParams }),
+    validateData({ params: tripIdParams, query: dailyStatsQuery }),
     getDailyStatsByTripIdAction
   );
 

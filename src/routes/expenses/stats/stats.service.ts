@@ -14,9 +14,10 @@ import { STATS_DAL, STATS_ERRORS } from "./stats.constant";
 
 export const getDailyStatsByTripIdService = async (
   userId: string,
-  tripId: string
+  tripId: string,
+  day?: Date
 ): Promise<DAILY_STATS_CAMEL_DTO> => {
-  logger.info("🔍 Fetching daily stats for tripId:", { tripId, userId });
+  logger.info("🔍 Fetching daily stats for tripId:", { tripId, userId, day });
 
   const trip = await safeQueryOne<TRIPS_DTO>(dal[TRIPS_DAL.getTripById], [
     tripId,
@@ -31,7 +32,7 @@ export const getDailyStatsByTripIdService = async (
 
   const dailyStats = await safeQueryOne<DAILY_STATS_DTO>(
     dal[STATS_DAL.getDailyStatsByTripId],
-    [tripId]
+    [tripId, day]
   );
 
   if (!dailyStats) {
