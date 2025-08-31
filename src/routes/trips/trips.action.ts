@@ -7,6 +7,7 @@ import { TRIPS_ERRORS } from "./trips.constant";
 import {
   addTripService,
   deleteTripByIdService,
+  getTripByIdService,
   getUserActiveTripService,
   getUserTripsService,
   updateTripByIdService,
@@ -188,6 +189,39 @@ export const getUserActiveTripAction = async (
 
     if (isErrorWithMessage(error, TRIPS_ERRORS.USER_NOT_FOUND)) {
       res.status(404).json({ error: TRIPS_ERRORS.USER_NOT_FOUND });
+      return;
+    }
+
+    res.status(500).json({ error: TRIPS_ERRORS.INTERNAL_SERVER_ERROR });
+  }
+};
+
+export const getTripByIdAction = async (
+  req: AuthenticatedRequest,
+  res: Response
+): Promise<void> => {
+  logger.info("🔍 Fetching trip by ID:", {
+    user: req.userId,
+    tripId: req.params.tripId,
+  });
+
+  try {
+    const trip = await getTripByIdService(req.params.tripId);
+
+    logger.info("✅ Trip fetched successfully:", {
+      id: trip.id,
+      timestamp: new Date().toISOString(),
+    });
+
+    res.json(trip);
+  } catch (error) {
+    logger.error("❌ Error during fetching trip:", {
+      error: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+    });
+
+    if (isErrorWithMessage(error, TRIPS_ERRORS.TRIP_NOT_FOUND)) {
+      res.status(404).json({ error: TRIPS_ERRORS.TRIP_NOT_FOUND });
       return;
     }
 

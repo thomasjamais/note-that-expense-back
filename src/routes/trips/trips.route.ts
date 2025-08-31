@@ -5,6 +5,7 @@ import express from "express";
 import {
   addTripAction,
   deleteTripByIdAction,
+  getTripByIdAction,
   getUserActiveTripAction,
   getUserTripsAction,
   updateTripByIdAction,
@@ -15,10 +16,14 @@ const router = express.Router();
 
 router
   .route("/trips")
-  .post(requireAuth, validateData({ body: addTripBody }), addTripAction);
+  .post(requireAuth, validateData({ body: addTripBody }), addTripAction)
+  .get(requireAuth, getUserTripsAction);
+
+router.route("/trips/active").get(requireAuth, getUserActiveTripAction);
 
 router
   .route("/trips/:tripId")
+  .get(requireAuth, validateData({ params: tripIdParam }), getTripByIdAction)
   .patch(
     requireAuth,
     validateData({ body: addTripBody, params: tripIdParam }),
@@ -29,9 +34,5 @@ router
     validateData({ params: tripIdParam }),
     deleteTripByIdAction
   );
-
-router.route("/trips/list").get(requireAuth, getUserTripsAction);
-
-router.route("/trips/active").get(requireAuth, getUserActiveTripAction);
 
 export { router };
