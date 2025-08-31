@@ -58,8 +58,8 @@ export const getPieChartForTripIdService = async (
   );
 
   if (!pieChartData || pieChartData.rowCount === 0) {
-    logger.warn("⚠️ No pie chart data found for trip:", { tripId });
-    throw new Error(CHARTS_ERRORS.CHARTS_NOT_FOUND);
+    logger.info("ℹ️ No pie chart data found for trip:", { tripId });
+    return [];
   }
 
   logger.info("✅ Pie chart data retrieved successfully for trip:", { tripId });

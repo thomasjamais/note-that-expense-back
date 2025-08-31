@@ -12,4 +12,5 @@ export const TRIPS_DAL = {
   updateTripById: "trips/updateTripById",
   deleteTripById: "trips/deleteTripById",
   getTripById: "trips/getTripById",
+  deactivateOtherTrips: "trips/deactivateOtherTrips",
 };

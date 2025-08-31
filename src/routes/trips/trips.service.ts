@@ -24,6 +24,12 @@ export const addTripService = async (
     logger.error("❌ addTripService failed: No trip created");
     throw new Error(TRIPS_ERRORS.USER_NOT_FOUND);
   }
+
+  if (data.isActive) {
+    await safeQuery(dal[TRIPS_DAL.deactivateOtherTrips], [userId, result.id]);
+    logger.info("🔌 Deactivated other trips for user:", { userId });
+  }
+
   return result;
 };
 
@@ -54,6 +60,12 @@ export const updateTripByIdService = async (
   data: AddTripBodyInput
 ): Promise<TRIPS_CAMEL_DTO> => {
   logger.info("✈️ updateTripByIdService called:", { userId, tripId, data });
+
+  if (data.isActive) {
+    await safeQuery(dal[TRIPS_DAL.deactivateOtherTrips], [userId, tripId]);
+    logger.info("🔌 Deactivated other trips for user:", { userId });
+  }
+
   const result = await safeQueryOne<TRIPS_DTO>(dal[TRIPS_DAL.updateTripById], [
     tripId,
     data.label,
