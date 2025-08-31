@@ -10,4 +10,4 @@ SELECT
   max_spent_converted,
   top_category
 FROM daily_expense_stats
-WHERE trip_id = $1::uuid AND day = CURRENT_DATE;
+WHERE trip_id = $1::uuid AND day = $2::date;

@@ -18,12 +18,18 @@ export const getDailyStatsByTripIdAction = async (
   logger.info("🔍 Retrieving daily stats for tripId and userId", {
     tripId: req.params.tripId,
     userId: req.userId,
+    date: req.query.date,
   });
 
   try {
+    const customDate = req.query.date
+      ? new Date(req.query.date as string)
+      : undefined;
+
     const dailyStats = await getDailyStatsByTripIdService(
       req.userId!,
-      req.params.tripId
+      req.params.tripId,
+      customDate
     );
     logger.info("✅ Trip daily stats retrieved successfully:", {
       length: dailyStats,
@@ -55,12 +61,23 @@ export const getSummaryStatsByTripIdAction = async (
   logger.info("🔍 Retrieving summary stats for tripId and userId", {
     tripId: req.params.tripId,
     userId: req.userId,
+    start: req.query.start,
+    end: req.query.end,
   });
 
   try {
+    const startDate = req.query.start
+      ? new Date(req.query.start as string)
+      : undefined;
+    const endDate = req.query.end
+      ? new Date(req.query.end as string)
+      : undefined;
+
     const summaryStats = await getSummaryStatsByTripIdService(
       req.userId!,
-      req.params.tripId
+      req.params.tripId,
+      startDate,
+      endDate
     );
     logger.info("✅ Trip summary stats retrieved successfully:", {
       length: summaryStats,

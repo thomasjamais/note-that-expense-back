@@ -14,9 +14,14 @@ import { STATS_DAL, STATS_ERRORS } from "./stats.constant";
 
 export const getDailyStatsByTripIdService = async (
   userId: string,
-  tripId: string
+  tripId: string,
+  customDate?: Date
 ): Promise<DAILY_STATS_CAMEL_DTO> => {
-  logger.info("🔍 Fetching daily stats for tripId:", { tripId, userId });
+  logger.info("🔍 Fetching daily stats for tripId:", {
+    tripId,
+    userId,
+    customDate,
+  });
 
   const trip = await safeQueryOne<TRIPS_DTO>(dal[TRIPS_DAL.getTripById], [
     tripId,
@@ -31,11 +36,15 @@ export const getDailyStatsByTripIdService = async (
 
   const dailyStats = await safeQueryOne<DAILY_STATS_DTO>(
     dal[STATS_DAL.getDailyStatsByTripId],
-    [tripId]
+    [tripId, customDate || new Date()]
   );
 
   if (!dailyStats) {
-    logger.warn("⚠️ No daily stats found for trip:", { tripId, userId });
+    logger.warn("⚠️ No daily stats found for trip:", {
+      tripId,
+      userId,
+      customDate,
+    });
     throw new Error(STATS_ERRORS.STATS_NOT_FOUND);
   }
 
@@ -44,9 +53,16 @@ export const getDailyStatsByTripIdService = async (
 
 export const getSummaryStatsByTripIdService = async (
   userId: string,
-  tripId: string
+  tripId: string,
+  startDate?: Date,
+  endDate?: Date
 ): Promise<TRIP_STATS_CAMEL_DTO> => {
-  logger.info("🔍 Fetching summary stats for tripId:", { tripId, userId });
+  logger.info("🔍 Fetching summary stats for tripId:", {
+    tripId,
+    userId,
+    startDate,
+    endDate,
+  });
 
   const trip = await safeQueryOne<TRIPS_DTO>(dal[TRIPS_DAL.getTripById], [
     tripId,
@@ -59,6 +75,7 @@ export const getSummaryStatsByTripIdService = async (
     throw new Error(STATS_ERRORS.NOT_AUTHORIZED);
   }
 
+  // Pour l'instant, utiliser les stats globales du voyage
   const summaryStats = await safeQueryOne<TRIP_STATS_DTO>(
     dal[STATS_DAL.getSummaryStatsByTripId],
     [tripId]
